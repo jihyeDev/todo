@@ -22,6 +22,9 @@ public class TodoListController extends HttpServlet {
 		String y = request.getParameter("y");
 		String m = request.getParameter("m");
 		String d = request.getParameter("d");
+		if(m.length()<2) {
+			m = "0"+m;
+		}
 		if(d.length()<2) {
 			d = "0"+d;
 		}
