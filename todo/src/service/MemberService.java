@@ -31,6 +31,46 @@ public class MemberService {
 		return loginMember;
 	}
 	
+	// 회원가입시 아이디 중복확인
+	public String selectMemberId(String memberIdCheck) {
+		String memberId = null;
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection("jdbc:mariadb://127.0.0.1:3307/todo", "root", "1801");
+			memberDao = new MemberDao();
+			memberId = memberDao.selectMemberId(conn, memberIdCheck);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return memberId;
+	}
+	
+	// 회원가입
+	public boolean addMember(Member member) {
+		boolean result =false;
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection("jdbc:mariadb://127.0.0.1:3307/todo", "root", "1801");
+			memberDao = new MemberDao();
+			result = memberDao.insertMember(conn, member);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	// 회원탈퇴 - 트랜잭션 처리
 	public boolean removeMember(Member member) {
 		boolean result = false;
