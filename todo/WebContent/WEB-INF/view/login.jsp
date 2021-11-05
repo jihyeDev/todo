@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<!-- sweetAlert2 CDN -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 body {
   padding: 20px;
@@ -24,7 +26,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body onload="myFunction()">
 	<div class="container pt-3">
 		<div class="text-center">
 			<h1 style="margin-top:150px; color:#A6A6A6;">LOGIN</h1>
@@ -38,12 +40,15 @@ body {
 					</div>
 				</div>
 			</form>
-			
-			<h1 style="margin-top:150px; color:#A6A6A6;">공지사항</h1>
-			<c:forEach var="n" items="${noticeList}">
-				<div>${n.createDate}${n.noticeTitle}</div>
-			</c:forEach>
 		</div>
 	</div>
 </body>
+<script>
+function myFunction() {
+	Swal.fire({
+		title:'<h1 style="color:#A6A6A6;">공지사항</h1>',
+		html:'<c:forEach var="n" items="${noticeList}"><div>${n.createDate}${n.noticeTitle}</div></c:forEach>'
+	})
+}
+</script>
 </html>
