@@ -57,7 +57,7 @@ body {
 							<td><input type="text" name="memberId" class="form-control" value="${memberIdCheck}"></td>
 						</tr>
 						<tr>
-							<td style="width:30px;">P W -</td>
+							<td style="width:30px;">P W</td>
 							<td><input type="text" name="memberPw" class="form-control"></td>
 						</tr>
 					</table>
