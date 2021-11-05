@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>LOGIN</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 구글 폰트 :Nanum+Gothic+Coding -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,12 +31,12 @@ body {
 	<div class="container pt-3">
 		<div class="text-center">
 			<h1 style="margin-top:150px; color:#A6A6A6;">LOGIN</h1>
-			<form method="post" action="${pageContext.request.contextPath}/login">
+			<form method="post" action="${pageContext.request.contextPath}/login" id="loginForm">
 				<div class="mx-auto m-3" style="width:300px;">
-					<div><input type="text" name="memberId" placeholder="I D" class="form-control"></div>
-					<div><input type="text" name="memberPw" placeholder="P W" class="form-control"></div>
+					<div><input type="text" name="memberId" id="memberId" placeholder="I D" class="form-control"></div>
+					<div><input type="text" name="memberPw" id="memberPw" placeholder="P W" class="form-control"></div>
 					<div>
-						<button type="submit" class="btn mt-3">로그인</button>
+						<button type="button" id="loginBtn" class="btn mt-3">로그인</button>
 						<a href="${pageContext.request.contextPath}/addMember" class="btn mt-3">회원가입</a>
 					</div>
 				</div>
@@ -44,11 +45,32 @@ body {
 	</div>
 </body>
 <script>
-function myFunction() {
-	Swal.fire({
-		title:'<h1 style="color:#A6A6A6;">공지사항</h1>',
-		html:'<c:forEach var="n" items="${noticeList}"><div>${n.createDate}${n.noticeTitle}</div></c:forEach>'
-	})
-}
+	// 페이지가 로드 되었을 때 alert를 sweetalert api를 사용하여 표시
+	function myFunction() {
+		Swal.fire({
+			title:'<h1 style="color:#A6A6A6;">공지사항</h1>',
+			html:'<c:forEach var="n" items="${noticeList}"><div>${n.createDate}${n.noticeTitle}</div></c:forEach>',
+			confirmButtonText: '닫기'
+		})
+	}
+	// 엔터키를 클릭했을 때 버튼을 누르는 클릭이벤트 실행
+	$(document).keypress(function(event){
+		if(event.keyCode == '13') {
+			$('#loginBtn').click();
+		}
+	});
+	
+	$('#loginBtn').click(function() {
+		// 버튼을 click했을 때
+		if($('#memberId').val() == '') { // id가 공백이면
+			alert('ID를 입력하세요');
+			return;
+		} else if($('#memberPw').val() == '') { // pw가 공백이면
+			alert('PW를 입력하세요');
+			return;
+		} else{
+			$('#loginForm').submit(); // <button type="button"> -> <button type="submit">
+		}
+	});
 </script>
 </html>
