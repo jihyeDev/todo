@@ -14,6 +14,7 @@ import vo.Todo;
 public class CalendarService {
 	private TodoDao todoDao;
 
+	// 캘린더
 	public Map<String, Object> getTargetCalendar(String memberId, String currentYear, String currentMonth, String option) { // option : pre, next
 		// 1. 달력 코드
 		Map<String, Object> map = new HashMap<>();
@@ -102,5 +103,25 @@ public class CalendarService {
 		map.put("todoList", list);
 		
 		return map;
+	}
+	
+	// 오늘의 일정
+	public List<Todo> getTodoListByDate(Todo todo) {
+		List<Todo> list = null;
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection("jdbc:mariadb://127.0.0.1:3307/todo", "root", "1801");
+			todoDao = new TodoDao();
+			list = todoDao.selectTodoListByDate(conn, todo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 }

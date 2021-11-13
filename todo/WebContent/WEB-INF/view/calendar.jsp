@@ -23,20 +23,20 @@ body {
   font-size: 40px;
   text-align: center;
   background-image: url("${pageContext.request.contextPath}/image/1.png");
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
   float: left;
-  width: 80%;
+  width: 20%;
 }
 
 /* Right column */
 .rightcolumn {
   float: left;
-  width: 20%;
+  width: 80%;
   padding-left: 20px;
 }
 
@@ -121,6 +121,22 @@ a:hover{
   font-weight:bold
 }
 
+#circle{
+  width:100%;
+  height:215px;
+  border-radius:50%;
+  background:#a09083;
+  text-align:center;
+  padding-top:30px;
+  color:#f3f4ef;
+  font-weight:bolder;
+}
+
+#navigator {
+  padding-top:15px;
+  width:100%;
+  height:50px;
+}
 </style>
 </head>
 <body>
@@ -138,24 +154,64 @@ a:hover{
 		<div class="cal">
 		<div class="row">
 		
-		  <div class="leftcolumn">
+		<div class="leftcolumn">
+		  	<div id="circle">
+		  		<!-- 달력의 년도와 월이 나오는 곳 -->
+		  		<div style="font-size:20px; margin-bottom:-30px;">${targetYear}</div>
+		  		<span style="font-size:110px;">${targetMonth}</span>
+		  		<!-- ${targetYear}년 ${targetMonth}월 -->
+		  	</div>
+		  	
+		  	<div id="navigator">
+		  		<!-- 이전, 다음 버튼 -->
+		  		<span class="float-left"><a href="${pageContext.request.contextPath}/member/calendar?currentYear=${targetYear}&currentMonth=${targetMonth}&option=pre" class="btn"> &lt; 이전 </a></span>
+		  		<span class="float-right"><a href="${pageContext.request.contextPath}/member/calendar?currentYear=${targetYear}&currentMonth=${targetMonth}&option=next" class="btn"> 다음 > </a></span>
+		  	</div>
+		  
+		    <div class="card text-center">
+		    	이달의 total todo
+		      	<div style="font-weight:bold; font-size:25px;">${todoList.size()}</div>
+		    </div>
+		    
+		    <div class="card">
+		    	<div>오늘의 일정</div>
+		    	<div>
+			    	<c:forEach var="t" items="${todayTodoList}">
+			    		<div>
+			    			<span style="color:${t.fontColor};">● </span> ${t.todoContent}
+						</div>
+					</c:forEach>
+				</div>
+		    </div>
+		    <div>
+				<div class="text-center">
+					<a href="${pageContext.request.contextPath}/member/logout" class="btn btn-sm mt-3" style="background-color:#A6A6A6; color:#fff; font-weight:bold;">로그아웃</a>
+					<a href="${pageContext.request.contextPath}/member/removeMember" class="btn btn-sm mt-3" style="background-color:#A6A6A6; color:#fff; font-weight:bold;">회원탈퇴</a>
+				</div>
+		    </div>
+		    
+		  </div>
+		
+		  <div class="rightcolumn">
 		  
 		    <div class="card">
+		    	<!--
 			    <div class="w-100 text-center">
 					<span class="float-left"><a href="${pageContext.request.contextPath}/member/calendar?currentYear=${targetYear}&currentMonth=${targetMonth}&option=pre" class="btn"> &lt; 이전 </a></span>
-					<span style="font-size:24px; font-weight:bold;">${targetYear}년 ${targetMonth}월</span>
+					<span>${targetYear}년 ${targetMonth}월</span>
 					<span class="float-right"><a href="${pageContext.request.contextPath}/member/calendar?currentYear=${targetYear}&currentMonth=${targetMonth}&option=next" class="btn"> 다음 > </a></span>
 				</div>
+				 -->
 				
 				<table border="1">
 					<tr class="text-center">
-						<td style="width:14%; color:red;">SUN</td>
-						<td style="width:14%;">MON</td>
-						<td style="width:14%;">TUE</td>
-						<td style="width:14%;">WED</td>
-						<td style="width:14%;">THUR</td>
-						<td style="width:14%;">FRI</td>
-						<td style="width:14%; color:blue;">SAT</td>
+						<td style="width:14%; color:red;">S</td>
+						<td style="width:14%;">M</td>
+						<td style="width:14%;">T</td>
+						<td style="width:14%;">W</td>
+						<td style="width:14%;">T</td>
+						<td style="width:14%;">F</td>
+						<td style="width:14%; color:blue;">S</td>
 					</tr>
 					<tr>
 						<!-- JSTL for문 -->
@@ -187,33 +243,7 @@ a:hover{
 		    
 		  </div>
 		  
-		  <div class="rightcolumn">
-		  
-		    <div class="card">
-		      	<div>
-					이달의 total todo : ${todoList.size()}
-				</div>
-		    </div>
-		    
-		    <div class="card">
-		    	<div>오늘의 일정</div>
-		    	<div>
-			    	<c:forEach var="t" items="${todoList}">
-			    		<c:if test="${i-startBlank == todo.todoDate.substring(8)}">
-            				<div><span style="color:${todo.todoDate.fontColor}">● </span>${todo.todoDate.todoContent}</div>
-				         </c:if>
-					</c:forEach>
-				</div>
-		    </div>
-		    <div>
-				<div class="text-center">
-					<a href="${pageContext.request.contextPath}/member/logout" class="btn btn-sm mt-3" style="background-color:#A6A6A6; color:#fff; font-weight:bold;">로그아웃</a>
-					<a href="${pageContext.request.contextPath}/member/removeMember" class="btn btn-sm mt-3" style="background-color:#A6A6A6; color:#fff; font-weight:bold;">회원탈퇴</a>
-				</div>
-		    </div>
-		    
-		  </div>
-		  </div>
+		 </div>
 		  
 		</div>
 		

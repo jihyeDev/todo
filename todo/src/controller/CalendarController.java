@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.CalendarService;
 import service.TodoService;
 import vo.Member;
+import vo.Todo;
 
 @WebServlet("/member/calendar")
 public class CalendarController extends HttpServlet {
@@ -29,6 +32,7 @@ public class CalendarController extends HttpServlet {
 		}
 		*/
 		
+		// 캘린더
 		String currentYear = request.getParameter("currentYear");
 		String currentMonth = request.getParameter("currentMonth");
 		String option = request.getParameter("option");
@@ -54,6 +58,21 @@ public class CalendarController extends HttpServlet {
 		request.setAttribute("endBlank", map.get("endBlank"));
 		// 달력에 출력할 todo 모델 목록
 		request.setAttribute("todoList", map.get("todoList"));
+		
+		// 오늘의 일정
+		Calendar c = Calendar.getInstance(); // 오늘 날짜의 년도와 월을 가진다
+		int y = c.get(Calendar.YEAR);
+		int m = c.get(Calendar.MONTH) + 1;
+		int d = c.get(Calendar.DATE);
+		String todoDate = y+"-"+m+"-"+d;
+		Todo todo = new Todo();
+		todo.setTodoDate(todoDate);
+		todo.setMemberId(memberId);
+
+		todoService = new TodoService();
+		List<Todo> todayTodoList = todoService.getTodoListByDate(todo);
+		 
+		request.setAttribute("todayTodoList", todayTodoList);
 
 		
 		request.getRequestDispatcher("/WEB-INF/view/calendar.jsp").forward(request, response);
