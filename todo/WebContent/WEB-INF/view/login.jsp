@@ -50,7 +50,8 @@ body {
 		Swal.fire({
 			title:'<h1 style="color:#A6A6A6;">공지사항</h1>',
 			html:'<c:forEach var="n" items="${noticeList}"><div>${n.createDate}${n.noticeTitle}</div></c:forEach>',
-			confirmButtonText: '닫기'
+			confirmButtonText:'닫기',
+			confirmButtonColor: '#a09083'
 		})
 	}
 	// 엔터키를 클릭했을 때 버튼을 누르는 클릭이벤트 실행
