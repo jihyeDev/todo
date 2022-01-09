@@ -63,15 +63,21 @@ public class CalendarController extends HttpServlet {
 		Calendar c = Calendar.getInstance(); // 오늘 날짜의 년도와 월을 가진다
 		int y = c.get(Calendar.YEAR);
 		int m = c.get(Calendar.MONTH) + 1;
+		String strm = "";
+		if(m<10) {
+			strm = "0"+m;
+		}
 		int d = c.get(Calendar.DATE);
-		String todoDate = y+"-"+m+"-"+d;
+		String todoDate = y+"-"+strm+"-"+d;
 		Todo todo = new Todo();
 		todo.setTodoDate(todoDate);
 		todo.setMemberId(memberId);
+		System.out.println("todo : "+todo);
 
 		todoService = new TodoService();
 		List<Todo> todayTodoList = todoService.getTodoListByDate(todo);
-		 
+		System.out.println("todayTodoList : "+todayTodoList);
+
 		request.setAttribute("todayTodoList", todayTodoList);
 
 		
